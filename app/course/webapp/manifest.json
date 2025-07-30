@@ -1,0 +1,187 @@
+{
+  "_version": "1.65.0",
+  "sap.app": {
+    "id": "course",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.0.1"
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "@sap/generator-fiori:lrop",
+      "version": "1.18.3",
+      "toolsId": "3f31ba0d-fed1-4626-b923-84e0a36b24c4"
+    },
+    "dataSources": {
+      "mainService": {
+        "uri": "/odata/v4/MainService/",
+        "type": "OData",
+        "settings": {
+          "annotations": [],
+          "odataVersion": "4.0"
+        }
+      }
+    },
+    "crossNavigation": {
+      "inbounds": {
+        "zcourse-Course": {
+          "semanticObject": "zcourse",
+          "action": "Course",
+          "title": "{{zcourse-Course.flpTitle}}",
+          "signature": {
+            "parameters": {},
+            "additionalParameters": "allowed"
+          }
+        }
+      }
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": true,
+    "dependencies": {
+      "minUI5Version": "1.138.1",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {},
+        "sap.fe.templates": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "course.i18n.i18n"
+        }
+      },
+      "": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      },
+      "@i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "uri": "i18n/i18n.properties"
+      }
+    },
+    "resources": {
+      "css": []
+    },
+    "routing": {
+      "config": {},
+      "routes": [
+        {
+          "pattern": ":?query:",
+          "name": "CourseList",
+          "target": "CourseList"
+        },
+        {
+          "pattern": "Course({key}):?query:",
+          "name": "CourseObjectPage",
+          "target": "CourseObjectPage"
+        },
+        {
+          "pattern": "Course({key})/Students({key2}):?query:",
+          "name": "EnrollmentObjectPage",
+          "target": "EnrollmentObjectPage"
+        }
+      ],
+      "targets": {
+        "CourseList": {
+          "type": "Component",
+          "id": "CourseList",
+          "name": "sap.fe.templates.ListReport",
+          "options": {
+            "settings": {
+              "contextPath": "/Course",
+              "variantManagement": "Page",
+              "navigation": {
+                "Course": {
+                  "detail": {
+                    "route": "CourseObjectPage"
+                  }
+                }
+              },
+              "controlConfiguration": {
+                "@com.sap.vocabularies.UI.v1.LineItem": {
+                  "tableSettings": {
+                    "type": "ResponsiveTable"
+                  }
+                }
+              },
+              "initialLoad": "Enabled"
+            }
+          }
+        },
+        "CourseObjectPage": {
+          "type": "Component",
+          "id": "CourseObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "editableHeaderContent": false,
+              "contextPath": "/Course",
+              "navigation": {
+                "Students": {
+                  "detail": {
+                    "route": "EnrollmentObjectPage"
+                  }
+                }
+              },
+              "controlConfiguration": {
+                "FeedbackID/@com.sap.vocabularies.UI.v1.LineItem#Feedbacks": {
+                  "tableSettings": {
+                    "personalization": {
+                      "sort": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "EnrollmentObjectPage": {
+          "type": "Component",
+          "id": "EnrollmentObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "editableHeaderContent": false,
+              "contextPath": "/Course/Students"
+            }
+          }
+        }
+      }
+    }
+  },
+  "sap.fiori": {
+    "registrationIds": [],
+    "archeType": "transactional"
+  }
+}
