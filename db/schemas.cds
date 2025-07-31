@@ -10,14 +10,13 @@ entity Student {
 
     LastName : String;
     
-    FullName : String =  case when LastName not like null then concat(FirstName, ' ', LastName) else FirstName end;
+    FullName : String =  case when LastName is null then FirstName else concat(FirstName, ' ', LastName)  end;
     
     @mandatory
-    @Validation.Pattern : '[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$'
-    Email : String;
+    @assert.format : '[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$'
+    Email : String ;
     
     @mandatory
-    @Consumption.filter: { defaultValue: '@Environment.systemDateTime' }
     RegisteredDate : Date;
 
     Courses : Association to many Enrollment on Courses.StudentID = $self
@@ -59,10 +58,10 @@ entity Instructor{
 
     LastName : String;
     
-    FullName : String =  case when LastName not like null then concat(FirstName, ' ', LastName) else FirstName end;
+    FullName : String =  case when LastName is null then FirstName else concat(FirstName, ' ', LastName)  end;
 
     @mandatory
-    @Validation.Pattern : '[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$'
+    @assert.format : '[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$'
     Email : String;
 
     @mandatory
@@ -79,6 +78,10 @@ entity Instructor{
     Expertise : String;
 
     Courses : Association to many Course on Courses.InstructorID = $self;
+}
+
+entity Expertise {
+    key Name : String;
 }
 
 entity Enrollment {

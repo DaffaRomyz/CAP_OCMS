@@ -78,3 +78,20 @@ annotate service.Course with @(
     ]
 );
 
+annotate service.Instructor with {
+    Expertise @(
+        Common.ValueList : {
+            $Type : 'Common.ValueListType',
+            CollectionPath : 'Expertise',
+            Parameters : [
+                {
+                    $Type : 'Common.ValueListParameterInOut',
+                    LocalDataProperty : Expertise,
+                    ValueListProperty : 'Name',
+                },
+            ],
+            Label : 'Expertise',
+        },
+        Common.ValueListWithFixedValues : true,
+)};
+

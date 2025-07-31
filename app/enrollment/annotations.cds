@@ -107,5 +107,17 @@ annotate service.Enrollment with @(
             },
         ],
     },
+    UI.Identification : [
+        {
+            $Type : 'UI.DataFieldForAction',
+            Action : 'MainService.setGrade',
+            Label : 'setGrade',
+        },
+        {
+            $Type : 'UI.DataFieldForAction',
+            Action : 'MainService.giveFeedback',
+            Label : 'giveFeedback',
+        },
+    ],
 );
 
